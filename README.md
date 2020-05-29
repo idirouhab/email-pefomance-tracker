@@ -46,7 +46,7 @@ Each scenario is independent and runs synchronously.
 
 ## Examples
 
-# SMTP, IMAP and POP3 with authentication and tls enabled
+### SMTP, IMAP and POP3 with authentication and tls enabled
 ```
 version: 1
 subject: "New Relic Roundtrip Mail"
@@ -82,7 +82,7 @@ scenarios:
     protocol_tls: true
 ```
 
-# SMTP with authentication and IMAP and POP3 without authentication and tls disabled
+### SMTP with authentication and IMAP and POP3 without authentication and tls disabled
 ```
 version: 1
 subject: "New Relic Roundtrip Mail"
@@ -115,7 +115,7 @@ scenarios:
 ```
 
 
-# SMTP, IMAP and POP3 without authentication and tls enabled
+### SMTP, IMAP and POP3 without authentication and tls enabled
 ```
 version: 1
 subject: "New Relic Roundtrip Mail"
