@@ -6,12 +6,6 @@ A simple application that performs check to monitor SMPT as well as IMAP and POP
 - nodejs v12
 - npm 6.14.0 or above
 
-## Installation
-
-```shell
-$ npm install
-```
-
 ## Configuration
 It's a yaml based file to execute the different round-trip tests.
 Each scenario is independent and runs synchronously.
@@ -143,9 +137,15 @@ scenarios:
     protocol_tls: false
 ```
 
+## Installation
+
+```shell
+$ npm install
+```
+
 ## Run
 
-Once you have the config.yaml filled, run:
+Once you have the config.yaml filled and placed in the same placer as the `email-performance-tracker_linux-x64` binary , run:
 ```shell script
 $ ./email-performace-tracker_linux-x64
 ```
