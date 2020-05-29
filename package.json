@@ -1,0 +1,22 @@
+{
+  "name": "email-pefomance-tracker",
+  "version": "1.0.0",
+  "description": "Simple Email performance tracker integrated with New Relic",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Idir Ouhab Meskine <iouhab@newrelic.com>",
+  "license": "ISC",
+  "dependencies": {
+    "atomic-sleep": "^1.0.0",
+    "imap-simple": "^5.0.0",
+    "js-yaml": "^3.14.0",
+    "node-cron": "^2.0.3",
+    "node-poplib-gowhich": "^1.0.2",
+    "nodemailer": "^6.4.6",
+    "request": "^2.88.2",
+    "synchronized-promise": "^0.3.1",
+    "uuid": "^8.1.0"
+  }
+}
