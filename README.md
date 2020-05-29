@@ -137,15 +137,20 @@ scenarios:
     protocol_tls: false
 ```
 
-## Installation
-
-```shell
-$ npm install
-```
-
-## Run
+## Run without docker
 
 Once you have the config.yaml filled and placed in the same placer as the `email-performance-tracker_linux-x64` binary , run:
 ```shell script
+$ npm install
 $ ./email-performace-tracker_linux-x64
 ```
+
+
+## Run with docker
+
+In the root folder and with the configuration file run:
+```shell script
+$  docker build -t email-monitoring .
+$  docker run email-monitoring:latest
+```
+
