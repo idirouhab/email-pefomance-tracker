@@ -30,13 +30,16 @@ cron.schedule("* * * * *", function () {
         const subject = `${configuration.subject} - {${uuidv4()}} - ${scenario.protocol}`;
         const sentTimeDate = new Date();
         const sentTime = sentTimeDate.getTime();
-
-        let SMTPResponse = sp(SMTP.send)(scenario, subject);
-
-        //Extract time that the message was sent
-        const {messageTime, messageId} = SMTPResponse;
-        sleep(1000);
         try {
+            let SMTPResponse;
+            try {
+                SMTPResponse = sp(SMTP.send)(scenario, subject);
+            } catch (e) {
+                throw new Error('Error connection to SMTP server')
+            }
+            //Extract time that the message was sent
+            const {messageTime, messageId} = SMTPResponse;
+            sleep(1000);
             //Get the message that was sent previously
             //We will be passing the different scenario which contains the configuration details
             let protocolResponse = sp(retrieveMessage)(scenario, subject);
@@ -62,7 +65,24 @@ cron.schedule("* * * * *", function () {
             if (global.debug) console.log(payload);
             sendToInsights(payload, configuration.newrelic);
         } catch (e) {
-            console.log(e.message)
+            if (global.debug) console.log(e.message);
+
+            let errorObject = removeSensitiveKeys(scenario);
+
+            errorObject['error'] = true;
+            errorObject['message'] = e.message;
+            sendToInsights(errorObject, configuration.newrelic);
         }
     });
+
 });
+
+function removeSensitiveKeys(object) {
+    Object.keys(object).forEach(key => {
+        if (key.includes("password")) {
+            delete object[key];
+        }
+    });
+
+    return object;
+}
