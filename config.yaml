@@ -1,9 +1,15 @@
 version: 1
 subject: "New Relic Roundtrip Mail"
 debug: false
+proxy:
+  host:
+  port:
+  auth:
+    username:
+    password:
 newrelic:
   accountId:
-  insertKey: ""
+  insertKey:
 scenarios:
   - from: ""
     to: ""
