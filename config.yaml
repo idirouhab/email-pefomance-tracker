@@ -9,7 +9,7 @@ proxy:
     password:
 newrelic:
   accountId:
-  insertKey:
+  insertKey: ""
 scenarios:
   - from: ""
     to: ""
