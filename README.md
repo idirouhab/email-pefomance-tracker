@@ -137,14 +137,11 @@ scenarios:
     protocol_tls: false
 ```
 
-## Run without docker
+## Run with an existing docker container
 
-Once you have the config.yaml filled and placed in the same placer as the `email-performance-tracker_linux-x64` binary , run:
 ```shell script
-$ npm install
-$ ./email-performace-tracker_linux-x64
+$ docker run -v ${PWD}/config.yaml:/usr/src/app/config.yaml idirouhab/email-tracker:latest
 ```
-
 
 ## Run with docker
 

@@ -35,7 +35,7 @@ cron.schedule("* * * * *", function () {
             try {
                 SMTPResponse = sp(SMTP.send)(scenario, subject);
             } catch (e) {
-                throw new Error('Error connection to SMTP server')
+                throw new Error(e.message)
             }
             //Extract time that the message was sent
             const {messageTime, messageId} = SMTPResponse;
@@ -65,7 +65,7 @@ cron.schedule("* * * * *", function () {
             if (global.debug) console.log(payload);
             sendToInsights(payload, configuration.newrelic);
         } catch (e) {
-            if (global.debug) console.log(e.message);
+            console.log(e.message);
 
             let errorObject = removeSensitiveKeys(scenario);
 
