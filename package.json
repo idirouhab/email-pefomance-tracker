@@ -16,6 +16,7 @@
     "node-cron": "^2.0.3",
     "node-poplib-gowhich": "^1.0.2",
     "nodemailer": "^6.4.6",
+    "socks": "^2.4.1",
     "synchronized-promise": "^0.3.1",
     "uuid": "^8.1.0"
   }

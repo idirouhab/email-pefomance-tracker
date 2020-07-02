@@ -36,7 +36,7 @@ global.proxy = configuration.proxy
             try {
                 SMTPResponse = sp(SMTP.send)(scenario, subject);
             } catch (e) {
-                throw new Error(e.message)
+                throw new Error(`SMTP: ${e.message}`);
             }
             //Extract time that the message was sent
             const {messageTime, messageId} = SMTPResponse;
