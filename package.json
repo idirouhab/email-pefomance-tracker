@@ -1,8 +1,9 @@
 {
   "name": "email-pefomance-tracker",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "Simple Email performance tracker integrated with New Relic",
   "main": "index.js",
+  "repository": "https://github.com/idirouhab/email-pefomance-tracker",
   "scripts": {
     "start": "node index.js"
   },
