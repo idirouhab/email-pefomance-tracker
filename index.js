@@ -25,7 +25,8 @@ const retrieveMessage = (scenario, subject) => {
 
 const configuration = Data.getYaml();
 global.debug = configuration.debug;
-cron.schedule("* * * * *", function () {
+global.proxy = configuration.proxy
+//cron.schedule("* * * * *", function () {
     configuration.scenarios.forEach((scenario, index) => {
         const subject = `${configuration.subject} - {${uuidv4()}} - ${scenario.protocol}`;
         const sentTimeDate = new Date();
@@ -63,7 +64,10 @@ cron.schedule("* * * * *", function () {
                 protocol_error: !!protocolResponse.rejected
             };
             if (global.debug) console.log(payload);
-            sendToInsights(payload, configuration.newrelic);
+            sendToInsights(payload, configuration.newrelic)
+                .catch((e => {
+                    console.log(`Not able to send data to New Relic: ${e.message}`)
+                }));
         } catch (e) {
             console.log(e.message);
 
@@ -71,11 +75,14 @@ cron.schedule("* * * * *", function () {
 
             errorObject['error'] = true;
             errorObject['message'] = e.message;
-            sendToInsights(errorObject, configuration.newrelic);
+            sendToInsights(errorObject, configuration.newrelic)
+                .catch((e => {
+                    console.log(`Not able to send data to New Relic: ${e.message}`)
+                }));
         }
     });
 
-});
+//});
 
 function removeSensitiveKeys(object) {
     Object.keys(object).forEach(key => {

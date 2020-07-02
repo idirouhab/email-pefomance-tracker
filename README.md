@@ -12,39 +12,48 @@ Each scenario is independent and runs synchronously.
 
 
 
-| Field                         | Value         | Required              | Comment     |
-| ------                        | -----------   | -----------           | ----------- |
-| version                       | int           | true                  | Version of the current project.|
-| subject                       | string        | true                  | Tag the email sent with an specific subject.  |
-| debug                         | bool          | true                  ||
-| newrelic                      | object        | true                  ||
-| newrelic.account_id           | int           | true                  | New Relic account where the data should be reported. Get it from [here](https://docs.newrelic.com/docs/accounts/install-new-relic/account-setup/account-id)   |
-| newrelic.insert_key           | string        | true                  | Key to push data into New Relic Insights. [Here](https://docs.newrelic.com/docs/insights/insights-data-sources/custom-data/introduction-event-api#register) are the instructions on how to create an insert key.   |
-| scenarios                     | array<object> | true                  ||
-| protocol                      | string        | true                  |Values must be either `pop3` or `imap`|
-| folder                        | string        | false                 |POP3 doesn't support folders, this field is only need for IMAP.<br/>Default: `INBOX`|
-| scenarios[].from              | string        | true                  |Specify the email address of the email's sender.|
-| scenarios[].to                | string        | true                  |Specify the address that the SMTP server will send the emails to.|
-| scenarios[].smtp_host         | string        | true                  ||
-| scenarios[].smtp_port         | int           | true                  ||
-| scenarios[].smtp_user         | string        | false                 ||
-| scenarios[].smtp_password     | string        | false                 ||
-| scenarios[].smtp_tls          | bool          | false                 | Default: `false`|
-| scenarios[].protocol_host     | string        | true                  ||
-| scenarios[].protocol_port     | int           | true                  ||
-| scenarios[].protocol_user     | string        | false                 ||
-| scenarios[].protocol_password | string        | false                 ||
-| scenarios[].protocol_tls      | bool          | false (default false) | Default: `false`|
+| Field                         | Value           | Required              | Comment     |
+| ------                        | -----------     | -----------           | ----------- |
+| version                       | int             | true                  | Version of the current project.|
+| subject                       | string          | true                  | Tag the email sent with an specific subject.  |
+| debug                         | bool            | true                  ||
+| proxy                         | false or object | false                 ||
+| proxy.host                    | string          | true                  ||
+| proxy.port                    | int             | true                  ||
+| proxy.auth                    | object          | false                 ||
+| proxy.auth.username           | string          | false                 ||
+| proxy.auth.password           | string          | false                 ||
+| newrelic                      | object          | true                  ||
+| newrelic.account_id           | int             | true                  | New Relic account where the data should be reported. Get it from [here](https://docs.newrelic.com/docs/accounts/install-new-relic/account-setup/account-id)   |
+| newrelic.insert_key           | string          | true                  | Key to push data into New Relic Insights. [Here](https://docs.newrelic.com/docs/insights/insights-data-sources/custom-data/introduction-event-api#register) are the instructions on how to create an insert key.   |
+| scenarios                     | array<object>   | true                  ||
+| protocol                      | string          | true                  |Values must be either `pop3` or `imap`|
+| folder                        | string          | false                 |POP3 doesn't support folders, this field is only need for IMAP.<br/>Default: `INBOX`|
+| scenarios[].from              | string          | true                  |Specify the email address of the email's sender.|
+| scenarios[].to                | string          | true                  |Specify the address that the SMTP server will send the emails to.|
+| scenarios[].smtp_host         | string          | true                  ||
+| scenarios[].smtp_port         | int             | true                  ||
+| scenarios[].smtp_user         | string          | false                 ||
+| scenarios[].smtp_password     | string          | false                 ||
+| scenarios[].smtp_tls          | bool            | false                 | Default: `false`|
+| scenarios[].protocol_host     | string          | true                  ||
+| scenarios[].protocol_port     | int             | true                  ||
+| scenarios[].protocol_user     | string          | false                 ||
+| scenarios[].protocol_password | string          | false                 ||
+| scenarios[].protocol_tls      | bool            | false (default false) | Default: `false`|
 
 
 
 ## Examples
 
-### SMTP, IMAP and POP3 with authentication and tls enabled
+### SMTP, IMAP and POP3 with authentication and tls enabled and proxy without authentication
 ```
 version: 1
 subject: "New Relic Roundtrip Mail"
 debug: false
+proxy:
+  host: "localhost"
+  port: 8888
 newrelic:
   accountId:
   insertKey: ""
@@ -76,11 +85,17 @@ scenarios:
     protocol_tls: true
 ```
 
-### SMTP with authentication and IMAP and POP3 without authentication and tls disabled
+### SMTP with authentication and IMAP and POP3 without authentication and tls disabled and proxy with authentication
 ```
 version: 1
 subject: "New Relic Roundtrip Mail"
 debug: false
+proxy:
+  host: "localhost"
+  port: 8888
+  auth:
+    username: "foobar"
+    password: "secret"
 newrelic:
   accountId:
   insertKey: ""
@@ -109,7 +124,7 @@ scenarios:
 ```
 
 
-### SMTP, IMAP and POP3 without authentication and tls enabled
+### SMTP, IMAP and POP3 without authentication and tls enabled without proxy
 ```
 version: 1
 subject: "New Relic Roundtrip Mail"
