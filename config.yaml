@@ -8,6 +8,7 @@ proxy:
     username:
     password:
 newrelic:
+  region:
   accountId:
   insertKey: ""
 scenarios:

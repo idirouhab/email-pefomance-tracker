@@ -6,7 +6,7 @@ const InsightsBaseURL = {
 }
 
 module.exports.sendToInsights = (payload, newRelic) => {
-    const {insertKey, accountId} = newRelic;
+    const { insertKey, accountId, region } = newRelic;
     const proxy = global.proxy ? global.proxy : false;
     const axiosClient = axios.create({
         timeout: 3000,
@@ -15,20 +15,22 @@ module.exports.sendToInsights = (payload, newRelic) => {
 
     if (global.debug) console.log('Sending data to New Relic');
     payload['eventType'] = 'Email';
-
+    if (global.debug) console.log(`Payload: ${JSON.stringify(payload)}`);
     return axiosClient
         .post(
-            `${getInsightsBaseRegionUrl(insertKey)}/v1/accounts/${accountId}/events`,
-            payload,
-            {
-                headers: {
-                    'content-type': 'application/json',
-                    'x-insert-key': insertKey
-                }
-            }
+          `${getInsightsBaseRegionUrl(region)}/v1/accounts/${accountId}/events`,
+          payload,
+          {
+              headers: {
+                  "content-type": "application/json",
+                  "x-insert-key": insertKey,
+              },
+          },
         );
 };
 
-function getInsightsBaseRegionUrl(insertKey) {
-    return insertKey.startsWith("eu") ? InsightsBaseURL.EU : InsightsBaseURL.US;
+
+
+function getInsightsBaseRegionUrl (region) {
+    return InsightsBaseURL[region];
 }

@@ -69,15 +69,13 @@ global.proxy = configuration.proxy
                     console.log(`Not able to send data to New Relic: ${e.message}`)
                 }));
         } catch (e) {
-            console.log(e.message);
-
             let errorObject = removeSensitiveKeys(scenario);
 
             errorObject['error'] = true;
             errorObject['message'] = e.message;
             sendToInsights(errorObject, configuration.newrelic)
                 .catch((e => {
-                    console.log(`Not able to send data to New Relic: ${e.message}`)
+                    console.log(`Not able to send data to New Relic: ${e}`)
                 }));
         }
     });
