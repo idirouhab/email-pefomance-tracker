@@ -12,6 +12,7 @@
   "dependencies": {
     "atomic-sleep": "^1.0.0",
     "axios": "^0.19.2",
+    "https-proxy-agent": "^5.0.0",
     "imap-simple": "^5.0.0",
     "js-yaml": "^3.14.0",
     "node-cron": "^2.0.3",
