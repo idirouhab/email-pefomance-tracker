@@ -13,7 +13,8 @@ module.exports.getEmails = (scenario, subject) => {
         config["password"] = scenario.protocol_password;
     }
 
-    var client = new Client(config);
+    const client = new Client(config);
+
 
     let startProtocolTime = new Date().getTime();
     return new Promise((resolve, reject) => {
@@ -22,7 +23,8 @@ module.exports.getEmails = (scenario, subject) => {
             if (global.debug) console.log('Getting POP3 email');
             client.retrieveAll(function (err, messages) {
                 if (err) reject(err);
-                messages.forEach(function (mail, num) {
+                for (let num in messages) {
+                    let mail = messages[num];
                     if (mail.subject === subject) {
                         const {receivedDate} = mail;
                         resolve({receivedDate, startProtocolTime});
@@ -30,7 +32,7 @@ module.exports.getEmails = (scenario, subject) => {
                             if (err) reject(err);
                         });
                     }
-                });
+                }
                 client.quit();
             })
         })

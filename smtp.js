@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 
-module.exports.send = (scenario, subject, cb) => {
-    if (global.debug) console.log('Send email');
+module.exports.send = async (scenario, subject, cb) => {
+    if (global.debug) console.log("Send email");
     const message = {
         from: scenario.from,
         to: scenario.to,
@@ -9,18 +9,26 @@ module.exports.send = (scenario, subject, cb) => {
         text: "",
     };
 
+    let tls = scenario.smtp_tls ? {
+        rejectUnauthorized: false
+    } : false;
+
     let transporter = {
         host: scenario.smtp_host,
         port: scenario.smtp_port,
-        secure: scenario.smtp_tls | false,
+        tls: tls,
+        secure: !!scenario.smtp_tls,
+        debug: true
     };
-
     if (scenario.smtp_user && scenario.smtp_password) {
-        transporter['auth'] = {
+        transporter["auth"] = {
+            type: "login",
             user: scenario.smtp_user,
             pass: scenario.smtp_password,
-        }
+        };
     }
+    const transport = nodemailer.createTransport(transporter)
+    await transport.verify();
 
-    return nodemailer.createTransport(transporter).sendMail(message, cb);
+    return transport.sendMail(message, cb);
 };
