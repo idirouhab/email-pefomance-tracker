@@ -26,7 +26,7 @@ const retrieveMessage = (scenario, subject) => {
 const configuration = Data.getYaml();
 global.debug = configuration.debug;
 global.proxy = configuration.proxy
-//cron.schedule("* * * * *", function () {
+cron.schedule("* * * * *", function () {
 
 for (scenario of configuration.scenarios) {
     const subject = `${configuration.subject} - {${uuidv4()}} - ${scenario.protocol}`;
@@ -84,7 +84,7 @@ for (scenario of configuration.scenarios) {
     }
 }
 
-//});
+});
 
 function removeSensitiveKeys(object) {
     Object.keys(object).forEach(key => {

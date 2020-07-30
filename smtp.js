@@ -17,7 +17,7 @@ module.exports.send = async (scenario, subject, cb) => {
         host: scenario.smtp_host,
         port: scenario.smtp_port,
         tls: tls,
-        secure: !!scenario.smtp_tls,
+        secure: false,
         debug: true
     };
     if (scenario.smtp_user && scenario.smtp_password) {

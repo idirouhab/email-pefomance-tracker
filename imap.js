@@ -5,7 +5,10 @@ module.exports.getEmails = (scenario, subject, cb) => {
         imap: {
             host: scenario.protocol_host,
             port: scenario.protocol_port,
-            tls: scenario.protocol_tls | false
+            tls: scenario.protocol_tls | false,
+            tlsOptions: {
+                rejectUnauthorized: false
+            },
         }
     };
 
@@ -18,11 +21,10 @@ module.exports.getEmails = (scenario, subject, cb) => {
         let startProtocolTime = new Date().getTime();
         imap.connect(config).then(connection => {
             if (global.debug) console.log('Getting IMAP email');
-            let folder = scenario.folder | "INBOX";
             connection.openBox(scenario.folder).then(() => {
                 const searchCriteria = [
                     'UNSEEN',
-                    // ['SUBJECT', subject]
+                     ['SUBJECT', subject]
                 ];
                 return connection.search(searchCriteria, {bodies: ['HEADER.FIELDS (FROM TO SUBJECT DATE)']});
             }).then(messages => {
